@@ -35,11 +35,11 @@ const RegistrationForm = ({ navigation }) => {
         return;
       }
 
-      // Save email and password to AsyncStorage (for simplicity, not secure in production)
+     
       await AsyncStorage.setItem(email, password);
 
       Alert.alert('Registration Successful!', `Welcome ${email}`);
-      // Navigate to login page after successful registration
+ 
       navigation.navigate('Login');
     }
   };
@@ -82,18 +82,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#DAFFFB',
+    backgroundColor: '#D4EBF8',
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: '#009990',
+    color: '#0A5EB0',
   },
   input: {
     height: 50,
-    borderColor: '#009990',
+    borderColor: '#0A5EB0',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   button: {
-    backgroundColor: '#009990',
+    backgroundColor: '#0A5EB0',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',

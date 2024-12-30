@@ -8,10 +8,13 @@ import {
   ActivityIndicator,
 } from "react-native";
 import axios from "axios";
+import { useClickCount } from "./components/ClickContext";  
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { incrementCount } = useClickCount();  
 
   useEffect(() => {
     fetchArticles();
@@ -27,7 +30,7 @@ const HomePage = () => {
             format: "json",
             origin: "*",
             list: "search",
-            srsearch: "education", // Change the keyword here
+            srsearch: "education", 
             srlimit: 10,
           },
         }
@@ -35,15 +38,15 @@ const HomePage = () => {
 
       const searchResults = response.data.query.search;
 
-      // Fetch images for each article
+    
       const articlesWithImages = await Promise.all(
         searchResults.map(async (item) => {
           const imageUrl = await fetchArticleImage(item.title);
           return {
             ...item,
             imageUrl,
-            status: "Available", // Static status tag for demonstration
-            description: item.snippet.replace(/(<([^>]+)>)/gi, ""), // Remove HTML tags from snippet
+            status: "Available", 
+            description: item.snippet.replace(/(<([^>]+)>)/gi, ""), 
           };
         })
       );
@@ -67,7 +70,7 @@ const HomePage = () => {
             origin: "*",
             titles: title,
             prop: "pageimages",
-            piprop: "original", // Fetch the original image URL
+            piprop: "original", 
           },
         }
       );
@@ -78,7 +81,7 @@ const HomePage = () => {
       return page.original?.source || "https://via.placeholder.com/150";
     } catch (error) {
       console.error("Error fetching image for article:", error);
-      return "https://via.placeholder.com/150"; // Fallback image
+      return "https://via.placeholder.com/150"; 
     }
   };
 
@@ -91,6 +94,10 @@ const HomePage = () => {
         <View style={styles.statusTag}>
           <Text style={styles.statusText}>{item.status}</Text>
         </View>
+       
+        <Text style={styles.clickText} onPress={incrementCount}>
+          Click to Count
+        </Text>
       </View>
     </View>
   );
@@ -117,14 +124,20 @@ const HomePage = () => {
 
 const styles = StyleSheet.create({
   container: {
+    // flex: 1,
+    // padding: 10,
+    backgroundColor: "#D4EBF8",
+    // margin:10,
+    // marginTop: 20,
     flex: 1,
     padding: 10,
-    backgroundColor: "#f5f5f5",
+    marginTop: 20,
   },
   loader: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    
   },
   card: {
     flexDirection: "row",
@@ -163,6 +176,12 @@ const styles = StyleSheet.create({
   statusText: {
     color: "#fff",
     fontSize: 12,
+    fontWeight: "bold",
+  },
+  clickText: {
+    marginTop: 10,
+    color: "#007bff",
+    fontSize: 14,
     fontWeight: "bold",
   },
 });
