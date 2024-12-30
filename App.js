@@ -75,7 +75,7 @@ export default function App() {
           )}
           options={{
             title: 'Articles',
-            headerShown: true, // Adjust based on preference
+            headerShown: true, 
           }}
         />
       </Stack.Navigator>
